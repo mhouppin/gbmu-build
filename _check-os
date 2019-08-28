@@ -1,0 +1,86 @@
+#!/bin/sh
+
+if test -z $OSTYPE
+then
+	echo "Unable to find OSTYPE variable"
+	exit 1
+fi
+
+echo "\c" > Makefile-os-names
+echo > Makefile-os-rules
+
+if test ! -f Makefile-os-names || test ! -w Makefile-os-names || \
+	test ! -f Makefile-os-rules || test ! -w Makefile-os-rules
+then
+	echo "Failed to clear Makefile OS-specific build files"
+	exit 1
+fi
+
+case $OSTYPE in
+	linux-gnu)
+		echo "Linux not supported for now."
+		exit 1
+		;;
+
+	darwin*)
+		echo "Generating Darwin build files..."
+		echo "APP_NAME:= GBmu.app" >> Makefile-os-names
+		echo >> Makefile-os-names
+		echo "EXECUTABLE:= build/gbmu" >> Makefile-os-names
+		echo >> Makefile-os-names
+		echo "APP_FILES:= \\" >> Makefile-os-names
+		echo "\tInfo.plist \\" >> Makefile-os-names
+		echo "\tMacOS/gbmu \\" >> Makefile-os-names
+		echo "\tResources/gbmu.icns" >> Makefile-os-names
+		echo >> Makefile-os-names
+		echo "APP_FILES:= \$(addprefix GBmu.app/Contents/,\$(APP_FILES))" >> Makefile-os-names
+		echo >> Makefile-os-names
+		echo "APP_DIRS:= GBmu.app/Contents/MacOS GBmu.app/Contents/Resources" >> Makefile-os-names
+		echo "all: \$(APP_NAME)" >> Makefile-os-rules
+		echo >> Makefile-os-rules
+		echo "\$(APP_NAME): \$(APP_DIRS) \$(APP_FILES)" >> Makefile-os-rules
+		echo >> Makefile-os-rules
+		echo "\$(APP_DIRS):" >> Makefile-os-rules
+		echo "\tmkdir -p \$@" >> Makefile-os-rules
+		echo >> Makefile-os-rules
+		echo "GBmu.app/Contents/MacOS/gbmu: \$(EXECUTABLE)" >> Makefile-os-rules
+		echo "\tcp \$< \$@" >> Makefile-os-rules
+		echo >> Makefile-os-rules
+		echo "\$(EXECUTABLE): build \$(CXX_OBJECTS)" >> Makefile-os-rules
+		echo "\t\$(COMPILE) -o \$@ \$(CXX_OBJECTS) \$(LIB_NAME)" >> Makefile-os-rules
+		echo >> Makefile-os-rules
+		echo "build:" >> Makefile-os-rules
+		echo "\tmkdir -p \$@" >> Makefile-os-rules
+		echo >> Makefile-os-rules
+		echo "GBmu.app/Contents/Info.plist: misc/Darwin/Info.plist" >> Makefile-os-rules
+		echo "\tcp \$< \$@" >> Makefile-os-rules
+		echo >> Makefile-os-rules
+		echo "GBmu.app/Contents/Resources/gbmu.icns: misc/Darwin/gbmu.icns" >> Makefile-os-rules
+		echo "\tcp \$< \$@" >> Makefile-os-rules
+		;;
+
+	cygwin)
+		echo "Cygwin not supported for now."
+		exit 1
+		;;
+
+	msys)
+		echo "GNU Windows not supported for now."
+		exit 1
+		;;
+
+	win32)
+		echo "Windows not supported for now."
+		exit 1
+		;;
+
+	freebsd*)
+		echo "BSD not supported for now."
+		exit 1
+		;;
+
+	*)
+		echo "Unknown system $OSTYPE."
+		exit 1
+		;;
+esac

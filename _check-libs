@@ -1,0 +1,30 @@
+#!/bin/sh
+
+which sdl2-config > /dev/null
+
+RET=$?
+
+if test $RET -eq 127
+then
+	echo "You don't have the command which?"
+	exit 1
+elif test $RET -eq 1
+then
+	echo "SDL2 is not installed on your computer"
+	exit 1
+fi
+
+LIBFLAGS=`sdl2-config --libs`
+
+LIBDIR=`echo $LIBFLAGS | tr '[:space:]' '\n' | grep -- -L | sed 's/-L//g'`
+LIBNAME=`echo $LIBFLAGS | tr '[:space:]' '\n' | grep -- -l | sed 's/-l/lib/g'`.dylib
+
+echo "SDL2 localized in $LIBDIR/$LIBNAME"
+
+echo "LIB_NAME:= $LIBDIR/$LIBNAME" > Makefile-lib
+
+if test ! -f Makefile-lib || test ! -w Makefile-lib
+then
+	echo "Failed to overwrite Makefile library"
+	exit
+fi

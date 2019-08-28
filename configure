@@ -1,0 +1,77 @@
+#!/bin/sh
+
+if test ! -x _mk-preset
+then
+	echo "Please run configure script in the main project directory"
+	exit 1
+fi
+
+./_mk-preset
+
+if test $? -ne 0
+then
+	echo "Failed to run Makefile Presets"
+	exit 2
+fi
+
+./_check-os
+
+if test $? -ne 0
+then
+	echo "Failed to detect OS"
+	exit 2
+fi
+
+./_check-libs
+
+if test $? -ne 0
+then
+	echo "Failed to check for available libraries"
+	exit 2
+fi
+
+./_check-compiler
+
+if test $? -ne 0
+then
+	echo "Failed to find an available C compiler"
+	exit 2
+fi
+
+cat Makefile-os-names > Makefile
+rm Makefile-os-names
+
+cat Makefile-preset >> Makefile
+rm Makefile-preset
+
+echo >> Makefile
+
+cat Makefile-compiler >> Makefile
+rm Makefile-compiler
+
+echo >> Makefile
+
+cat Makefile-lib >> Makefile
+rm Makefile-lib
+
+cat Makefile-os-rules >> Makefile
+rm Makefile-os-rules
+
+echo >> Makefile
+echo "build/objects/%.o: code/sources/%.c build/objects" >> Makefile
+echo "\t\$(COMPILE) \$(CXX_FLAGS) \$(shell sdl2-config --cflags) -o \$@ \$<" >> Makefile
+echo >> Makefile
+echo "build/objects:" >> Makefile
+echo "\tmkdir -p \$@" >> Makefile
+echo >> Makefile
+echo "-include \$(DEPENDS)" >> Makefile
+echo >> Makefile
+echo "clean:" >> Makefile
+echo "\trm -rf build" >> Makefile
+echo >> Makefile
+echo "fclean: clean" >> Makefile
+echo "\trm -rf \$(APP_NAME)" >> Makefile
+echo >> Makefile
+echo "re: fclean all" >> Makefile
+echo >> Makefile
+echo ".PHONY: all clean fclean re" >> Makefile

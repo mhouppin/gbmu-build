@@ -1,0 +1,25 @@
+#!/bin/sh
+
+which gcc >& /dev/null
+
+if test $? -eq 0
+then
+	echo "COMPILE:= gcc" > Makefile-compiler
+	echo "CXX_FLAGS:= -Wall -Wextra -Werror -O2 -c -MMD -I code/include" >> Makefile-compiler
+	echo "compiler: \c"
+	which gcc
+	exit
+fi
+
+which clang >& /dev/null
+
+if test $? -eq 0
+then
+	echo "COMPILE:= clang" > Makefile-compiler
+	echo "CXX_FLAGS:= -Wall -Wextra -Werror -O2 -c -MMD -I code/include" >> Makefile-compiler
+	echo "compiler: \c"
+	which clang
+	exit
+fi
+
+exit 1

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "\nCXX_SOURCES:= \\" > Makefile-preset
+
+if test ! -f Makefile-preset || test ! -w Makefile-preset
+then
+	echo "Makefile creation failed"
+fi
+
+CXX_SOURCES=`find code/sources \( -type f -name "*.c" \)`
+
+for CXX_SOURCE in $CXX_SOURCES
+do
+	echo "Adding $CXX_SOURCE to Makefile..."
+	echo "\t$CXX_SOURCE \\" >> Makefile-preset
+done
+
+echo >> Makefile-preset
+echo "CXX_OBJECTS:= \$(patsubst code/sources/%.c,build/objects/%.o,\$(CXX_SOURCES))" >> Makefile-preset
+echo "CXX_DEPENDS:= \$(patsubst code/sources/%.c,build/objects/%.d,\$(CXX_SOURCES))" >> Makefile-preset
