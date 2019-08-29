@@ -26,8 +26,6 @@ case $OSTYPE in
 		echo "Generating Darwin build files..."
 		echo "APP_NAME:= GBmu.app" >> Makefile-os-names
 		echo >> Makefile-os-names
-		echo "EXECUTABLE:= build/gbmu" >> Makefile-os-names
-		echo >> Makefile-os-names
 		echo "APP_FILES:= \\" >> Makefile-os-names
 		echo "\tInfo.plist \\" >> Makefile-os-names
 		echo "\tMacOS/gbmu \\" >> Makefile-os-names
@@ -43,10 +41,7 @@ case $OSTYPE in
 		echo "\$(APP_DIRS):" >> Makefile-os-rules
 		echo "\tmkdir -p \$@" >> Makefile-os-rules
 		echo >> Makefile-os-rules
-		echo "GBmu.app/Contents/MacOS/gbmu: \$(EXECUTABLE)" >> Makefile-os-rules
-		echo "\tcp \$< \$@" >> Makefile-os-rules
-		echo >> Makefile-os-rules
-		echo "\$(EXECUTABLE): build \$(CXX_OBJECTS)" >> Makefile-os-rules
+		echo "GBmu.app/Contents/MacOS/gbmu: build \$(CXX_OBJECTS)" >> Makefile-os-rules
 		echo "\t\$(COMPILE) -o \$@ \$(CXX_OBJECTS) \$(LIB_NAME)" >> Makefile-os-rules
 		echo >> Makefile-os-rules
 		echo "build:" >> Makefile-os-rules

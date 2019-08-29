@@ -58,11 +58,8 @@ cat Makefile-os-rules >> Makefile
 rm Makefile-os-rules
 
 echo >> Makefile
-echo "build/objects/%.o: code/sources/%.c build/objects" >> Makefile
+echo "build/%.o: code/sources/%.c" >> Makefile
 echo "\t\$(COMPILE) \$(CXX_FLAGS) \$(shell sdl2-config --cflags) -o \$@ \$<" >> Makefile
-echo >> Makefile
-echo "build/objects:" >> Makefile
-echo "\tmkdir -p \$@" >> Makefile
 echo >> Makefile
 echo "-include \$(DEPENDS)" >> Makefile
 echo >> Makefile
