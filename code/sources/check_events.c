@@ -6,7 +6,7 @@
 /*   By: mhouppin <mhouppin@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/08 09:53:23 by mhouppin     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/08 14:09:12 by mhouppin    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/29 11:26:23 by mhouppin    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,17 +32,7 @@ void	check_cntrl_events(cycle_count_t cycles)
 
 		while (SDL_PollEvent(&ev))
 			if (ev.type == SDL_WINDOWEVENT && ev.window.event == SDL_WINDOWEVENT_CLOSE)
-			{
-				if (ev.window.windowID == SDL_GetWindowID(g_window))
-					exit(EXIT_SUCCESS);
-				else if (ev.window.windowID == SDL_GetWindowID(g_dwindow))
-				{
-					SDL_DestroyTexture(g_dtexture);
-					SDL_DestroyRenderer(g_drender);
-					SDL_DestroyWindow(g_dwindow);
-					g_dwindow = NULL;
-				}
-			}
+				exit(EXIT_SUCCESS);
 	}
 }
 
