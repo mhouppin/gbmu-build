@@ -6,7 +6,7 @@
 /*   By: mhouppin <mhouppin@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/08 09:53:23 by mhouppin     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/29 11:26:23 by mhouppin    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/16 09:04:08 by mhouppin    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,8 +25,7 @@ void	check_cntrl_events(cycle_count_t cycles)
 	{
 		ev_cycles -= 10000;
 
-		if (GAMEBOY_STATUS != NORMAL_MODE)
-			check_gb_events();
+		check_gb_events();
 
 		SDL_Event ev;
 

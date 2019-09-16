@@ -6,7 +6,7 @@
 /*   By: mhouppin <mhouppin@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/05 04:58:27 by mhouppin     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/13 11:41:06 by mhouppin    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/16 09:04:40 by mhouppin    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,6 +50,8 @@ void	update_timer_values(cycle_count_t cycles)
 void	auto_sri(registers_t *regs, uint16_t new_pc, uint8_t if_mask)
 {
 	GAMEBOY_STATUS = NORMAL_MODE;
+	if (g_memmap.ime == false)
+		return ;
 	g_memmap.ime = false;
 	IF_REGISTER &= ~(if_mask);
 	regs->reg_sp -= 2;

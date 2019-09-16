@@ -6,7 +6,7 @@
 /*   By: mhouppin <mhouppin@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/08 11:02:11 by mhouppin     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/13 13:30:28 by mhouppin    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/16 08:58:34 by mhouppin    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -1145,12 +1145,12 @@ add_sp_imm8:
 	imm_16 = regs->reg_sp + (int8_t)imm_8;
 	if ((imm_8 < 0x80u) && (imm_16 & 0xFFu) < (regs->reg_sp & 0xFFu))
 		regs->reg_f |= FLAG_CY;
-	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFFu) > (regs->reg_sp & 0xFFu))
-		regs->reg_f |= FLAG_CY;
+//	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFFu) > (regs->reg_sp & 0xFFu))
+//		regs->reg_f |= FLAG_CY;
 	if ((imm_8 < 0x80u) && (imm_16 & 0xFu) < (regs->reg_sp & 0xFu))
 		regs->reg_f |= FLAG_H;
-	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFu) > (regs->reg_sp & 0xFu))
-		regs->reg_f |= FLAG_H;
+//	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFu) > (regs->reg_sp & 0xFu))
+//		regs->reg_f |= FLAG_H;
 	regs->reg_sp = imm_16;
 	return (16);
 
@@ -1222,12 +1222,12 @@ ld_hl_sp_imm8:
 	imm_16 = regs->reg_sp + (int8_t)imm_8;
 	if ((imm_8 < 0x80u) && (imm_16 & 0xFFu) < (regs->reg_sp & 0xFFu))
 		regs->reg_f |= FLAG_CY;
-	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFFu) > (regs->reg_sp & 0xFFu))
-		regs->reg_f |= FLAG_CY;
+//	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFFu) > (regs->reg_sp & 0xFFu))
+//		regs->reg_f |= FLAG_CY;
 	if ((imm_8 < 0x80u) && (imm_16 & 0xFu) < (regs->reg_sp & 0xFu))
 		regs->reg_f |= FLAG_H;
-	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFu) > (regs->reg_sp & 0xFu))
-		regs->reg_f |= FLAG_H;
+//	else if ((imm_8 >= 0x80u) && (imm_16 & 0xFu) > (regs->reg_sp & 0xFu))
+//		regs->reg_f |= FLAG_H;
 	regs->reg_hl = imm_16;
 	return (12);
 
@@ -1425,7 +1425,7 @@ rlc_e:
 	return (8);
 
 rlc_h:
-	RLC_8(regs->reg_e);
+	RLC_8(regs->reg_h);
 	return (8);
 
 rlc_l:
@@ -1458,7 +1458,7 @@ rrc_e:
 	return (8);
 
 rrc_h:
-	RRC_8(regs->reg_e);
+	RRC_8(regs->reg_h);
 	return (8);
 
 rrc_l:
@@ -1491,7 +1491,7 @@ rl_e:
 	return (8);
 
 rl_h:
-	RL_8(regs->reg_e);
+	RL_8(regs->reg_h);
 	return (8);
 
 rl_l:
@@ -1524,7 +1524,7 @@ rr_e:
 	return (8);
 
 rr_h:
-	RR_8(regs->reg_e);
+	RR_8(regs->reg_h);
 	return (8);
 
 rr_l:
@@ -1558,7 +1558,7 @@ sla_e:
 	return (8);
 
 sla_h:
-	SLA_8(regs->reg_e);
+	SLA_8(regs->reg_h);
 	return (8);
 
 sla_l:
@@ -1591,7 +1591,7 @@ sra_e:
 	return (8);
 
 sra_h:
-	SRA_8(regs->reg_e);
+	SRA_8(regs->reg_h);
 	return (8);
 
 sra_l:
@@ -1624,7 +1624,7 @@ swap_e:
 	return (8);
 
 swap_h:
-	SWAP_8(regs->reg_e);
+	SWAP_8(regs->reg_h);
 	return (8);
 
 swap_l:
@@ -1657,7 +1657,7 @@ srl_e:
 	return (8);
 
 srl_h:
-	SRL_8(regs->reg_e);
+	SRL_8(regs->reg_h);
 	return (8);
 
 srl_l:
@@ -1690,7 +1690,7 @@ bit_0_e:
 	return (8);
 
 bit_0_h:
-	BIT_8(regs->reg_e, 0);
+	BIT_8(regs->reg_h, 0);
 	return (8);
 
 bit_0_l:
@@ -1723,7 +1723,7 @@ bit_1_e:
 	return (8);
 
 bit_1_h:
-	BIT_8(regs->reg_e, 1);
+	BIT_8(regs->reg_h, 1);
 	return (8);
 
 bit_1_l:
@@ -1756,7 +1756,7 @@ bit_2_e:
 	return (8);
 
 bit_2_h:
-	BIT_8(regs->reg_e, 2);
+	BIT_8(regs->reg_h, 2);
 	return (8);
 
 bit_2_l:
@@ -1789,7 +1789,7 @@ bit_3_e:
 	return (8);
 
 bit_3_h:
-	BIT_8(regs->reg_e, 3);
+	BIT_8(regs->reg_h, 3);
 	return (8);
 
 bit_3_l:
@@ -1822,7 +1822,7 @@ bit_4_e:
 	return (8);
 
 bit_4_h:
-	BIT_8(regs->reg_e, 4);
+	BIT_8(regs->reg_h, 4);
 	return (8);
 
 bit_4_l:
@@ -1855,7 +1855,7 @@ bit_5_e:
 	return (8);
 
 bit_5_h:
-	BIT_8(regs->reg_e, 5);
+	BIT_8(regs->reg_h, 5);
 	return (8);
 
 bit_5_l:
@@ -1888,7 +1888,7 @@ bit_6_e:
 	return (8);
 
 bit_6_h:
-	BIT_8(regs->reg_e, 6);
+	BIT_8(regs->reg_h, 6);
 	return (8);
 
 bit_6_l:
@@ -1921,7 +1921,7 @@ bit_7_e:
 	return (8);
 
 bit_7_h:
-	BIT_8(regs->reg_e, 7);
+	BIT_8(regs->reg_h, 7);
 	return (8);
 
 bit_7_l:
@@ -1954,7 +1954,7 @@ res_0_e:
 	return (8);
 
 res_0_h:
-	RES_8(regs->reg_e, 0);
+	RES_8(regs->reg_h, 0);
 	return (8);
 
 res_0_l:
@@ -1987,7 +1987,7 @@ res_1_e:
 	return (8);
 
 res_1_h:
-	RES_8(regs->reg_e, 1);
+	RES_8(regs->reg_h, 1);
 	return (8);
 
 res_1_l:
@@ -2020,7 +2020,7 @@ res_2_e:
 	return (8);
 
 res_2_h:
-	RES_8(regs->reg_e, 2);
+	RES_8(regs->reg_h, 2);
 	return (8);
 
 res_2_l:
@@ -2053,7 +2053,7 @@ res_3_e:
 	return (8);
 
 res_3_h:
-	RES_8(regs->reg_e, 3);
+	RES_8(regs->reg_h, 3);
 	return (8);
 
 res_3_l:
@@ -2086,7 +2086,7 @@ res_4_e:
 	return (8);
 
 res_4_h:
-	RES_8(regs->reg_e, 4);
+	RES_8(regs->reg_h, 4);
 	return (8);
 
 res_4_l:
@@ -2119,7 +2119,7 @@ res_5_e:
 	return (8);
 
 res_5_h:
-	RES_8(regs->reg_e, 5);
+	RES_8(regs->reg_h, 5);
 	return (8);
 
 res_5_l:
@@ -2152,7 +2152,7 @@ res_6_e:
 	return (8);
 
 res_6_h:
-	RES_8(regs->reg_e, 6);
+	RES_8(regs->reg_h, 6);
 	return (8);
 
 res_6_l:
@@ -2185,7 +2185,7 @@ res_7_e:
 	return (8);
 
 res_7_h:
-	RES_8(regs->reg_e, 7);
+	RES_8(regs->reg_h, 7);
 	return (8);
 
 res_7_l:
@@ -2218,7 +2218,7 @@ set_0_e:
 	return (8);
 
 set_0_h:
-	SET_8(regs->reg_e, 0);
+	SET_8(regs->reg_h, 0);
 	return (8);
 
 set_0_l:
@@ -2251,7 +2251,7 @@ set_1_e:
 	return (8);
 
 set_1_h:
-	SET_8(regs->reg_e, 1);
+	SET_8(regs->reg_h, 1);
 	return (8);
 
 set_1_l:
@@ -2284,7 +2284,7 @@ set_2_e:
 	return (8);
 
 set_2_h:
-	SET_8(regs->reg_e, 2);
+	SET_8(regs->reg_h, 2);
 	return (8);
 
 set_2_l:
@@ -2317,7 +2317,7 @@ set_3_e:
 	return (8);
 
 set_3_h:
-	SET_8(regs->reg_e, 3);
+	SET_8(regs->reg_h, 3);
 	return (8);
 
 set_3_l:
@@ -2350,7 +2350,7 @@ set_4_e:
 	return (8);
 
 set_4_h:
-	SET_8(regs->reg_e, 4);
+	SET_8(regs->reg_h, 4);
 	return (8);
 
 set_4_l:
@@ -2383,7 +2383,7 @@ set_5_e:
 	return (8);
 
 set_5_h:
-	SET_8(regs->reg_e, 5);
+	SET_8(regs->reg_h, 5);
 	return (8);
 
 set_5_l:
@@ -2416,7 +2416,7 @@ set_6_e:
 	return (8);
 
 set_6_h:
-	SET_8(regs->reg_e, 6);
+	SET_8(regs->reg_h, 6);
 	return (8);
 
 set_6_l:
@@ -2449,7 +2449,7 @@ set_7_e:
 	return (8);
 
 set_7_h:
-	SET_8(regs->reg_e, 7);
+	SET_8(regs->reg_h, 7);
 	return (8);
 
 set_7_l:
